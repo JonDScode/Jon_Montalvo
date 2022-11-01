@@ -29,8 +29,26 @@ nav .nav-right-section li {
     color: black;
 }
 
+.nav-item {
+    background-color: #777;
+}
+body {
+    margin: 0;
+    background-color: #777;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: aliceblue;
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+}
+
+main {
+    
+}
+
 h1 {
 text-align: center;
+color:gray;
 
 }
 
@@ -46,4 +64,17 @@ img {
     display: block;
     margin: auto;
     border-radius: 35px;
+    /* filter: grayscale(100%); */
+}
+
+h3 {
+    color: black;
+    text-align: center;
+    text-size-adjust: 24px;
+}
+
+h4 {
+    color: black;
+    text-align: center;
+    text-size-adjust: 24px;
 }
