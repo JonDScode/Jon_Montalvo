@@ -1,52 +1,633 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Latest compiled and minified CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Jon Montalvo - CV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <title>Jon_Montalvo</title>
+        body {
+            font-family: 'Press Start 2P', monospace;
+            background: linear-gradient(45deg, #0f0f23, #1a1a2e, #16213e);
+            color: #00ff00;
+            overflow-x: hidden;
+            animation: backgroundShift 20s ease-in-out infinite;
+            line-height: 1.6;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { background: linear-gradient(45deg, #0f0f23, #1a1a2e, #16213e); }
+            50% { background: linear-gradient(45deg, #16213e, #0f0f23, #1a1a2e); }
+        }
+
+        /* Stars Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: relative;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 3px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+            gap: 2rem;
+        }
+
+        .nav-btn {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: #00ff00;
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+            transform: translateY(-3px);
+        }
+
+        /* Main Content */
+        .cv-container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 3rem 2rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid #00ff00;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.1), transparent);
+            animation: scanLine 3s ease-in-out infinite;
+        }
+
+        @keyframes scanLine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .profile-title {
+            font-size: 2.5rem;
+            color: #00ff00;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+            margin-bottom: 0.5rem;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(0, 255, 0, 0.8); }
+            to { text-shadow: 0 0 20px rgba(0, 255, 0, 1), 0 0 30px rgba(0, 255, 0, 0.8); }
+        }
+
+        .profile-subtitle {
+            font-size: 1.2rem;
+            color: #ffff00;
+            margin-bottom: 2rem;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid #00ff00;
+            margin: 2rem auto;
+            display: block;
+            filter: sepia(1) hue-rotate(90deg) saturate(2);
+            transition: all 0.3s ease;
+            animation: profileFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes profileFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .profile-image:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+        }
+
+        .profile-description {
+            font-size: 0.8rem;
+            line-height: 1.8;
+            color: #ccc;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: justify;
+        }
+
+        /* Skills Grid */
+        .skills-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #ffff00;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '◆ ◆ ◆';
+            color: #00ff00;
+            font-size: 0.8rem;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .section-title::before {
+            left: -150px;
+        }
+
+        .section-title::after {
+            right: -150px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff00;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            border-color: #ffff00;
+            box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: #00ff00;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .skill-title {
+            font-size: 1rem;
+            color: #00ff00;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .skill-list {
+            font-size: 0.6rem;
+            line-height: 2;
+            color: #ccc;
+        }
+
+        .skill-item {
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-item::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #ffff00;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Experience Section */
+        .experience-section {
+            margin-bottom: 4rem;
+        }
+
+        .experience-card {
+            background: rgba(0, 0, 0, 0.8);
+            border-left: 5px solid #00ff00;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .experience-card:hover {
+            border-left-color: #ffff00;
+            transform: translateX(10px);
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: #00ff00;
+            border-radius: 50%;
+            border: 3px solid #0f0f23;
+        }
+
+        .experience-title {
+            font-size: 1rem;
+            color: #00ff00;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-company {
+            font-size: 0.8rem;
+            color: #ffff00;
+            margin-bottom: 1rem;
+        }
+
+        .experience-description {
+            font-size: 0.6rem;
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 3px solid #00ff00;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer a {
+            color: #00ff00;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #ffff00;
+            text-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+        }
+
+        /* Status Bar */
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 2px solid #00ff00;
+            padding: 0.5rem 1rem;
+            font-size: 0.6rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-title { font-size: 2rem; }
+            .profile-subtitle { font-size: 1rem; }
+            .navbar { flex-wrap: wrap; gap: 1rem; }
+            .nav-btn { padding: 0.6rem 1rem; font-size: 0.6rem; }
+            .section-title::before,
+            .section-title::after { display: none; }
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    <header class="nav nav-tabs bg-dark">
-        <nav class="navbar navbar-expand-lg bg-dark">
-          <ul class="nav justify-content-center">
-            <li class="nav-item bg-dark">
-              <a class="nav-link" aria-current="page" href="../index.html">Home</a>
-            </li>
-            <li class="nav-item bg-dark">
-              <a class="nav-link" href="./cv.html">CV</a>
-            </li>
-            <li class="nav-item bg-dark">
-              <a class="nav-link" href="./projects.html">Projects</a>
-            </li>
-            <li class="nav-item bg-dark">
-              <a class="nav-link" href="./blog.html">Blog</a>
-            </li>
-          </ul>
+    <!-- Animated Stars Background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Navigation -->
+    <header class="nav-container">
+        <nav class="navbar">
+            <a href="#" onclick="goToHome()" class="nav-btn">HOME</a>
+            <a href="#" class="nav-btn active">CV</a>
+            <a href="#" class="nav-btn">PROJECTS</a>
+            <a href="#" class="nav-btn">BLOG</a>
         </nav>
     </header>
-    <main>
-      <br>
-        <h1>Jon Montalvo</h1>
-        <h2>Sitio web en Construcción</h2>
-        <img src="https://img.freepik.com/vector-gratis/ciencia-datos-programacion_39422-1055.jpg?w=1380&t=st=1666310">
+
+    <main class="cv-container">
+        <!-- Profile Section -->
+        <section class="profile-section">
+            <h1 class="profile-title">JON MONTALVO</h1>
+            <h2 class="profile-subtitle">SOFTWARE DEVELOPER</h2>
+            <img src="https://user-images.githubusercontent.com/97572313/236815417-8e92373b-9b9a-4b7a-9919-df298f23622b.jpg" 
+                 alt="Jon Montalvo" class="profile-image">
+            <p class="profile-description">
+                Profesional en Comercio Internacional apasionado por el Desarrollo de Software, 
+                la Ciencia de Datos y la Inteligencia Artificial, con enfoque especializado en 
+                finanzas y economía. Mi experiencia abarca desde el desarrollo full-stack hasta 
+                la implementación de soluciones de Machine Learning e IA.
+            </p>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="skills-section">
+            <h2 class="section-title">TECH STACK</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3 class="skill-title">MACHINE LEARNING & AI</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Python</div>
+                        <div class="skill-item">Scikit-learn</div>
+                        <div class="skill-item">Spacy</div>
+                        <div class="skill-item">Scipy</div>
+                        <div class="skill-item">Matplotlib / Plotly / Seaborn</div>
+                        <div class="skill-item">Streamlit</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-title">BACKEND DEVELOPMENT</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Java & Spring Boot</div>
+                        <div class="skill-item">Python (Django, Flask, FastAPI)</div>
+                        <div class="skill-item">Node.js & Express</div>
+                        <div class="skill-item">React.js</div>
+                        <div class="skill-item">RESTful APIs</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-title">FRONTEND DEVELOPMENT</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">JavaScript</div>
+                        <div class="skill-item">ReactJS</div>
+                        <div class="skill-item">HTML5 & CSS3</div>
+                        <div class="skill-item">Bootstrap</div>
+                        <div class="skill-item">Sass</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-title">TOOLS & METHODOLOGIES</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Git & GitHub</div>
+                        <div class="skill-item">Agile SCRUM</div>
+                        <div class="skill-item">CI/CD</div>
+                        <div class="skill-item">Docker</div>
+                        <div class="skill-item">Database Management</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section class="experience-section">
+            <h2 class="section-title">EXPERIENCE LEVEL</h2>
+            
+            <div class="experience-card">
+                <h3 class="experience-title">FULL-STACK DEVELOPER</h3>
+                <p class="experience-company">FREELANCE & PERSONAL PROJECTS</p>
+                <p class="experience-description">
+                    Desarrollo de aplicaciones web completas utilizando tecnologías modernas. 
+                    Experiencia en arquitectura de microservicios, bases de datos relacionales 
+                    y no relacionales, y despliegue en la nube.
+                </p>
+            </div>
+
+            <div class="experience-card">
+                <h3 class="experience-title">DATA SCIENTIST & ML ENGINEER</h3>
+                <p class="experience-company">RESEARCH & DEVELOPMENT</p>
+                <p class="experience-description">
+                    Implementación de modelos de Machine Learning para análisis predictivo en 
+                    datos financieros. Desarrollo de pipelines de datos automatizados y 
+                    visualizaciones interactivas para insights empresariales.
+                </p>
+            </div>
+
+            <div class="experience-card">
+                <h3 class="experience-title">INTERNATIONAL TRADE PROFESSIONAL</h3>
+                <p class="experience-company">COMMERCIAL SECTOR</p>
+                <p class="experience-description">
+                    Experiencia en comercio internacional proporcionando una perspectiva única 
+                    en el desarrollo de soluciones tecnológicas para el sector financiero y 
+                    económico global.
+                </p>
+            </div>
+        </section>
     </main>
-    <footer class="bg-dark text-center text-lg-start">
-      <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2022 Copyright:
-        <a class="text-dark" href="jonnathanospinam@gmail.com">Jon Montalvo</a>
-      </div>
-      <!-- Copyright -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Jon Montalvo - CV Portfolio</p>
+        <p><a href="mailto:jonnathanospinam@gmail.com">jonnathanospinam@gmail.com</a></p>
+        <p style="font-size: 0.5rem; margin-top: 1rem; opacity: 0.7;">READY TO LEVEL UP YOUR TEAM</p>
     </footer>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-item">
+            <div class="status-dot"></div>
+            <span>CV MODE</span>
+        </div>
+        <div class="status-item">
+            <span>SKILLS: ████████████ MAX</span>
+        </div>
+        <div class="status-item">
+            <span>EXPERIENCE: GROWING</span>
+        </div>
+    </div>
+
+    <script>
+        // Generate animated stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 50;
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Navigation function to go back to home
+        function goToHome() {
+            // In a real implementation, this would navigate to the main page
+            alert('🎮 Navegando a HOME... \n\n(En implementación real, esto redirigiría a index.html)');
+        }
+
+        // Skill hover effects
+        function setupSkillEffects() {
+            const skillCategories = document.querySelectorAll('.skill-category');
+            
+            skillCategories.forEach(category => {
+                category.addEventListener('mouseenter', () => {
+                    const items = category.querySelectorAll('.skill-item');
+                    items.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.color = '#ffff00';
+                            item.style.transform = 'translateX(10px)';
+                        }, index * 100);
+                    });
+                });
+
+                category.addEventListener('mouseleave', () => {
+                    const items = category.querySelectorAll('.skill-item');
+                    items.forEach(item => {
+                        item.style.color = '#ccc';
+                        item.style.transform = 'translateX(0)';
+                    });
+                });
+            });
+        }
+
+        // Profile image easter egg
+        function setupProfileEffects() {
+            const profileImage = document.querySelector('.profile-image');
+            let clickCount = 0;
+            
+            profileImage.addEventListener('click', () => {
+                clickCount++;
+                
+                if (clickCount >= 5) {
+                    profileImage.style.animation = 'profileFloat 0.5s ease-in-out 3';
+                    
+                    // Show secret message
+                    const secretMsg = document.createElement('div');
+                    secretMsg.textContent = '🎮 DEVELOPER MODE ACTIVATED! 🎮';
+                    secretMsg.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background: rgba(0, 0, 0, 0.9);
+                        color: #ffff00;
+                        padding: 2rem;
+                        border: 3px solid #ffff00;
+                        font-family: 'Press Start 2P', monospace;
+                        z-index: 9999;
+                        font-size: 1rem;
+                        text-align: center;
+                    `;
+                    document.body.appendChild(secretMsg);
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(secretMsg);
+                        clickCount = 0;
+                    }, 3000);
+                }
+            });
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            setupSkillEffects();
+            setupProfileEffects();
+        });
+
+        // Add typing sound effect for skill items
+        document.addEventListener('DOMContentLoaded', () => {
+            const skillItems = document.querySelectorAll('.skill-item');
+            
+            skillItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-20px)';
+                
+                setTimeout(() => {
+                    item.style.transition = 'all 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, index * 100);
+            });
+        });
+    </script>
 </body>
 </html>
