@@ -1,52 +1,545 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Latest compiled and minified CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Jonnathan Ospina - Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <title>Jon_Montalvo</title>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #2c3e50;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Geometric Canvas Background */
+        #geometric-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: relative;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e9ecef;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 2px solid #6c757d;
+            color: #495057;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn:hover {
+            background: #343a40;
+            color: white;
+            border-color: #343a40;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52, 58, 64, 0.3);
+        }
+
+        .nav-btn.active {
+            background: #212529;
+            color: white;
+            border-color: #212529;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            min-height: 100vh;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 3rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .page-header .subtitle {
+            font-size: 1.3rem;
+            color: #6c757d;
+            font-weight: 400;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid #e9ecef;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.05), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-color: #adb5bd;
+        }
+
+        .project-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-type {
+            color: #6c757d;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .project-description {
+            color: #495057;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            background: #f8f9fa;
+            color: #495057;
+            padding: 0.3rem 0.8rem;
+            border: 1px solid #e9ecef;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: #495057;
+            text-decoration: none;
+            font-weight: 500;
+            border: 2px solid #6c757d;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .project-link:hover {
+            background: #343a40;
+            color: white;
+            border-color: #343a40;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(33, 37, 41, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #495057;
+            padding: 0.8rem 1rem;
+            font-size: 0.8rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #adb5bd;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2.5rem; }
+            .page-header .subtitle { font-size: 1.1rem; }
+            .navbar { flex-wrap: wrap; gap: 1rem; padding: 1rem; }
+            .nav-btn { padding: 0.6rem 1.5rem; font-size: 0.8rem; }
+            .main-container { padding: 2rem 1rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    <header class="nav nav-tabs bg-dark">
-        <nav class="navbar navbar-expand-lg bg-dark">
-          <ul class="nav justify-content-center">
-            <li class="nav-item bg-dark">
-              <a class="nav-link" aria-current="page" href="../index.html">Home</a>
-            </li>
-            <li class="nav-item bg-dark">
-              <a class="nav-link" href="./cv.html">CV</a>
-            </li>
-            <li class="nav-item bg-dark">
-              <a class="nav-link" href="./projects.html">Projects</a>
-            </li>
-            <li class="nav-item bg-dark">
-              <a class="nav-link" href="./blog.html">Blog</a>
-            </li>
-          </ul>
+    <!-- Geometric Canvas Background -->
+    <canvas id="geometric-canvas"></canvas>
+
+    <!-- Navigation -->
+    <header class="nav-container">
+        <nav class="navbar">
+            <a href="../index.html" class="nav-btn">HOME</a>
+            <a href="cv.html" class="nav-btn">CV</a>
+            <a href="projects.html" class="nav-btn active">PROJECTS</a>
+            <a href="blog.html" class="nav-btn">BLOG</a>
         </nav>
     </header>
-    <main>
-      <br>
-        <h1>Jon Montalvo</h1>
-        <h2>Sitio web en Construcción</h2>
-        <img src="https://img.freepik.com/vector-gratis/ciencia-datos-programacion_39422-1055.jpg?w=1380&t=st=1666310">
+
+    <main class="main-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Projects</h1>
+            <p class="subtitle">A collection of my development work and research projects</p>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">AI-Powered Financial Analysis Tool</h3>
+                    <p class="project-type">Machine Learning • Finance</p>
+                </div>
+                <p class="project-description">
+                    A comprehensive tool for financial market analysis using machine learning algorithms. 
+                    Features predictive modeling, sentiment analysis, and automated reporting capabilities.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Scikit-learn</span>
+                    <span class="tech-tag">Pandas</span>
+                    <span class="tech-tag">Streamlit</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link">View Demo</a>
+                    <a href="#" class="project-link">Source Code</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Modern Portfolio Website</h3>
+                    <p class="project-type">Web Development • Frontend</p>
+                </div>
+                <p class="project-description">
+                    A responsive portfolio website with modern design patterns, featuring fractal animations, 
+                    smooth navigation, and optimized performance across all devices.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">HTML5</span>
+                    <span class="tech-tag">CSS3</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">Canvas API</span>
+                    <span class="tech-tag">Responsive Design</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link">Live Site</a>
+                    <a href="#" class="project-link">GitHub</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Data Visualization Dashboard</h3>
+                    <p class="project-type">Data Science • Visualization</p>
+                </div>
+                <p class="project-description">
+                    Interactive dashboard for complex data visualization with real-time updates. 
+                    Built with modern frameworks and featuring multiple chart types and filtering options.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">D3.js</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">MongoDB</span>
+                    <span class="tech-tag">Socket.io</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link">View Demo</a>
+                    <a href="#" class="project-link">Documentation</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">REST API for E-commerce</h3>
+                    <p class="project-type">Backend Development • API</p>
+                </div>
+                <p class="project-description">
+                    Scalable REST API for e-commerce applications with authentication, payment processing, 
+                    and comprehensive admin features. Built with modern security practices.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Java</span>
+                    <span class="tech-tag">Spring Boot</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">JWT</span>
+                    <span class="tech-tag">Docker</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link">API Docs</a>
+                    <a href="#" class="project-link">Source Code</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">NLP Text Analysis Tool</h3>
+                    <p class="project-type">Natural Language Processing • AI</p>
+                </div>
+                <p class="project-description">
+                    Advanced text analysis tool using natural language processing techniques. 
+                    Features sentiment analysis, entity recognition, and text summarization capabilities.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Spacy</span>
+                    <span class="tech-tag">NLTK</span>
+                    <span class="tech-tag">Flask</span>
+                    <span class="tech-tag">TensorFlow</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link">Try Demo</a>
+                    <a href="#" class="project-link">Research Paper</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Cryptocurrency Trading Bot</h3>
+                    <p class="project-type">Fintech • Automation</p>
+                </div>
+                <p class="project-description">
+                    Intelligent trading bot for cryptocurrency markets with risk management, 
+                    technical analysis, and automated execution. Includes backtesting capabilities.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">ccxt</span>
+                    <span class="tech-tag">TA-Lib</span>
+                    <span class="tech-tag">Redis</span>
+                    <span class="tech-tag">WebSocket</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link">Performance</a>
+                    <a href="#" class="project-link">Documentation</a>
+                </div>
+            </div>
+        </div>
     </main>
-    <footer class="bg-dark text-center text-lg-start">
-      <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2022 Copyright:
-        <a class="text-dark not-active" href="jonnathanospinam@gmail.com">Jon Montalvo</a>
-      </div>
-      <!-- Copyright -->
-    </footer>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-item">
+            <div class="status-dot"></div>
+            <span>PROJECTS MODE</span>
+        </div>
+        <div class="status-item">
+            <span>Version: 2025.1.0</span>
+        </div>
+        <div class="status-item">
+            <span id="current-time"></span>
+        </div>
+    </div>
+
+    <script>
+        // Same geometric canvas as other pages
+        class GeometricRenderer {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.time = 0;
+                this.mouseX = 0;
+                this.mouseY = 0;
+                
+                this.resize();
+                this.setupEventListeners();
+                this.animate();
+            }
+            
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            setupEventListeners() {
+                window.addEventListener('resize', () => this.resize());
+                window.addEventListener('mousemove', (e) => {
+                    this.mouseX = e.clientX / window.innerWidth;
+                    this.mouseY = e.clientY / window.innerHeight;
+                });
+            }
+            
+            drawCircularPattern() {
+                const centerX = this.canvas.width / 2;
+                const centerY = this.canvas.height / 2;
+                const time = this.time * 0.001;
+                
+                for (let i = 0; i < 12; i++) {
+                    const angle = (i * Math.PI * 2 / 12) + time * 0.5;
+                    const radius = 150 + Math.sin(time + i) * 50;
+                    
+                    const x = centerX + Math.cos(angle) * radius;
+                    const y = centerY + Math.sin(angle) * radius;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, 20, 0, Math.PI * 2);
+                    
+                    const opacity = 0.1 + Math.sin(time + i) * 0.05;
+                    this.ctx.strokeStyle = `rgba(108, 117, 125, ${opacity})`;
+                    this.ctx.lineWidth = 1;
+                    this.ctx.stroke();
+                    
+                    // Connect circles
+                    if (i > 0) {
+                        const prevAngle = ((i-1) * Math.PI * 2 / 12) + time * 0.5;
+                        const prevRadius = 150 + Math.sin(time + (i-1)) * 50;
+                        const prevX = centerX + Math.cos(prevAngle) * prevRadius;
+                        const prevY = centerY + Math.sin(prevAngle) * prevRadius;
+                        
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(prevX, prevY);
+                        this.ctx.lineTo(x, y);
+                        this.ctx.strokeStyle = `rgba(73, 80, 87, ${opacity * 0.5})`;
+                        this.ctx.stroke();
+                    }
+                }
+            }
+            
+            render() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.drawCircularPattern();
+            }
+            
+            animate() {
+                this.time = Date.now();
+                this.render();
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // Update time in status bar
+        function updateTime() {
+            const timeElement = document.getElementById('current-time');
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            timeElement.textContent = timeString;
+        }
+        
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize geometric canvas
+            const canvas = document.getElementById('geometric-canvas');
+            new GeometricRenderer(canvas);
+            
+            // Update time immediately and then every minute
+            updateTime();
+            setInterval(updateTime, 60000);
+            
+            // Add subtle parallax effect
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const canvas = document.getElementById('geometric-canvas');
+                canvas.style.transform = `translateY(${scrolled * 0.05}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
 </body>
 </html>
